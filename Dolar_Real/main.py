@@ -1,23 +1,23 @@
 import requests
 
-def obter_cotacao_dolar(api_key):
+def get_dollar_quote(api_key):
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
     response = requests.get(url)
-    dados = response.json()
+    data = response.json()
     if response.status_code == 200:
-        cotacao_usd_brl = dados['conversion_rates']['BRL']
-        return cotacao_usd_brl
+        quote_usd_brl = data['conversion_rates']['BRL']
+        return quote_usd_brl
     else:
-        raise Exception(dados.get("error-type", "Erro desconhecido"))
+        raise Exception(data.get("error-type", "unknown error"))
 
 def main():
     api_key = "7c5597414ff248032d3c89e5"
     try:
-        cotacao = obter_cotacao_dolar(api_key)
-        print(f"A cotação atual do dólar em relação ao real é: R$ {cotacao:.2f}")
+        quote = get_dollar_quote(api_key)
+        print(f"The current exchange rate of the dollar in relation to the Brazilian real is: R$ {quote:.2f}")
     except Exception as e:
-        print("Não foi possível obter a cotação do dólar.")
-        print(f"Erro: {e}")
+        print("It was not possible to get the dollar quote.")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
